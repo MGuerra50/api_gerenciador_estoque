@@ -1,6 +1,6 @@
 # API Finance Organizer
 
-_A Spring Boot REST API for managing personal finances, leveraging PostgreSQL for data persistence and Flyway for database migrations._
+_A Spring Boot REST API for managing finances, leveraging PostgreSQL for data persistence and Flyway for database migrations._
 
 ---
 
