@@ -22,25 +22,16 @@ Follow these steps to get the application up and running:
 
 In the root directory of the project (where `docker-compose.yml` resides), run:
 
-```bash
 docker-compose up -d
 
 
-This will:
+# This will pull the official PostgreSQL image, create a container named postgres-spring, and expose the database on the configured port.
 
-- Pull the official PostgreSQL image  
-- Create a container named `postgres-spring`  
-- Expose the database on the configured port  
-
----
-
-## Run the API
+Run the API
 
 With the database container running, start the Spring Boot application:
 
-### On Unix/macOS (Git Bash, Linux, macOS)
-
-```bash
+# On Unix/macOS (Git Bash, Linux, macOS)
 ./mvnw spring-boot:run
 
 # On Windows (PowerShell or CMD)
