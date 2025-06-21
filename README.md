@@ -1,6 +1,6 @@
-# API Finance Organizer
+# API Inventory Manager
 
-_A Spring Boot REST API for managing finances, leveraging PostgreSQL for data persistence and Flyway for database migrations._
+_A Spring Boot REST API for inventory manager, leveraging PostgreSQL for data persistence and Flyway for database migrations._
 
 ---
 
