@@ -1,13 +1,13 @@
-package com.sistema.financas.organizador;
+package com.inventory.manager;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ApiOrganizadorFinancasApplication {
+public class ApiInventoryManagerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ApiOrganizadorFinancasApplication.class, args);
+		SpringApplication.run(ApiInventoryManagerApplication.class, args);
 	}
 
 }
