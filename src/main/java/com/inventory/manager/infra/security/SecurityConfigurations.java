@@ -19,8 +19,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfigurations {
 
-//    @Autowired
-//    SecurityFi
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -29,9 +27,9 @@ public class SecurityConfigurations {
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(
                         authHttpReq -> {
-                            authHttpReq.requestMatchers(HttpMethod.POST, "/login").permitAll();
-                            authHttpReq.requestMatchers(HttpMethod.POST, "/register").hasRole("ADMIN");
-                            authHttpReq.anyRequest().authenticated();
+                            authHttpReq.requestMatchers(HttpMethod.POST, "/login").permitAll()
+                            .requestMatchers(HttpMethod.POST, "/register").permitAll()
+                            .anyRequest().authenticated();
                         }
                 )
                 .build();
