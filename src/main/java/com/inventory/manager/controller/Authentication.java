@@ -24,12 +24,9 @@ public class Authentication {
 
     @PostMapping("/login")
     public ResponseEntity login (@RequestBody @Valid LoginDetails loginDetails){
-
         var userNamePassword = new UsernamePasswordAuthenticationToken(loginDetails.email(), loginDetails.password());
         var auth = this.authenticationManager.authenticate(userNamePassword);
-
         return ResponseEntity.ok().build();
-
     }
 
     @PostMapping("/register")
