@@ -13,11 +13,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfigurations {
+
+    @Autowired
+    SecurityFilter securityFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -31,6 +33,7 @@ public class SecurityConfigurations {
                             .anyRequest().authenticated();
                         }
                 )
+                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
@@ -39,7 +42,7 @@ public class SecurityConfigurations {
         return  authenticationConfiguration.getAuthenticationManager();
     }
 
-    @Bean 
+    @Bean
     public PasswordEncoder passwordEncoder (){
         return new BCryptPasswordEncoder();
     }

@@ -1,9 +1,7 @@
 package com.inventory.manager.controller;
 
-import com.inventory.manager.domain.users.LoginDetails;
-import com.inventory.manager.domain.users.RegisterDTO;
-import com.inventory.manager.domain.users.Users;
-import com.inventory.manager.domain.users.UsersRepository;
+import com.inventory.manager.domain.users.*;
+import com.inventory.manager.infra.security.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,11 +20,17 @@ public class Authentication {
     @Autowired
     private UsersRepository repository;
 
+    @Autowired
+    TokenService tokenService;
+
     @PostMapping("/login")
     public ResponseEntity login (@RequestBody @Valid LoginDetails loginDetails){
         var userNamePassword = new UsernamePasswordAuthenticationToken(loginDetails.email(), loginDetails.password());
         var auth = this.authenticationManager.authenticate(userNamePassword);
-        return ResponseEntity.ok().build();
+
+        var token = tokenService.generateToken((Users) auth.getPrincipal());
+
+        return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
     @PostMapping("/register")
