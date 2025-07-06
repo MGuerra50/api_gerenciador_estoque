@@ -32,6 +32,12 @@ public class Users implements UserDetails {
     private boolean email_verified;
     private boolean two_factor_enabled;
 
+    public Users(String email, String encryptedPassword, Roles roles) {
+        this.email = email;
+        this.password = encryptedPassword;
+        this.role = roles;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if(this.role == Roles.ADMIN) return List.of(new SimpleGrantedAuthority("admin"), new SimpleGrantedAuthority("user"));
@@ -40,12 +46,12 @@ public class Users implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return this.email;
     }
 
     @Override
     public String getPassword() {
-        return email;
+        return this.password;
     }
 
     @Override

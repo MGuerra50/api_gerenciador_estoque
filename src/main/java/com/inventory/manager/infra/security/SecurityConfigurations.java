@@ -13,14 +13,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfigurations {
 
-//    @Autowired
-//    SecurityFi
+    @Autowired
+    SecurityFilter securityFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -29,11 +28,12 @@ public class SecurityConfigurations {
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(
                         authHttpReq -> {
-                            authHttpReq.requestMatchers(HttpMethod.POST, "/login").permitAll();
-                            authHttpReq.requestMatchers(HttpMethod.POST, "/register").hasRole("ADMIN");
-                            authHttpReq.anyRequest().authenticated();
+                            authHttpReq.requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                            .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+                            .anyRequest().authenticated();
                         }
                 )
+                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
@@ -42,7 +42,7 @@ public class SecurityConfigurations {
         return  authenticationConfiguration.getAuthenticationManager();
     }
 
-    @Bean 
+    @Bean
     public PasswordEncoder passwordEncoder (){
         return new BCryptPasswordEncoder();
     }
