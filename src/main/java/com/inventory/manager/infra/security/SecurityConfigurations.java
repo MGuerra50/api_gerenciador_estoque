@@ -30,6 +30,7 @@ public class SecurityConfigurations {
                         authHttpReq -> {
                             authHttpReq.requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                             .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+                                    .requestMatchers(HttpMethod.GET, "/products/all").authenticated()
                             .anyRequest().authenticated();
                         }
                 )
