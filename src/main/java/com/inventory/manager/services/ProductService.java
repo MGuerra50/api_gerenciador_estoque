@@ -5,11 +5,11 @@ import com.inventory.manager.domain.product.ProductDTORequest;
 import com.inventory.manager.domain.product.ProductDTOResponse;
 import com.inventory.manager.domain.product.ProductRepository;
 import com.inventory.manager.exception.ResourceNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,20 +18,18 @@ public class ProductService {
     @Autowired
     ProductRepository productRepository;
 
-    public Product findById (Long id){
-        return productRepository
-                .findById(id)
-                .orElseThrow(
-                        () -> new ResourceNotFoundException("Produto \"" + id + "\" não encontrado")
-                );
+    public Product findById(Long id) {
+        return productRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Produto \"" + id + "\" não encontrado")
+        );
     }
 
-    public List<ProductDTOResponse> findAll (){
+    public List<ProductDTOResponse> findAll() {
         List<Product> list = productRepository.findAll();
         return list.stream().map(ProductDTOResponse::new).collect(Collectors.toList());
     }
 
-    public ProductDTOResponse createProduct (ProductDTORequest productDTORequest){
+    public ProductDTOResponse createProduct(ProductDTORequest productDTORequest) {
         Product product = new Product();
         product.setCategory(productDTORequest.category());
         product.setName(productDTORequest.name());
@@ -45,7 +43,8 @@ public class ProductService {
         return new ProductDTOResponse(savedProduct);
     }
 
-    public ProductDTOResponse updateProduct (Long id, ProductDTORequest dtoRequest) {
+    @Transactional
+    public ProductDTOResponse updateProduct(Long id, ProductDTORequest dtoRequest) {
         Product product = findById(id);
 
         product.setCategory(dtoRequest.category());
@@ -60,8 +59,8 @@ public class ProductService {
         return new ProductDTOResponse(savedProduct);
     }
 
-    public void deleteById (Long id){
-        if(!productRepository.existsById(id)){
+    public void deleteById(Long id) {
+        if (!productRepository.existsById(id)) {
             throw new ResourceNotFoundException("Produto \"" + id + "\" não encontrado");
         }
         productRepository.deleteById(id);
