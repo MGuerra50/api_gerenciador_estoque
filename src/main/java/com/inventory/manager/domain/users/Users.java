@@ -1,5 +1,6 @@
 package com.inventory.manager.domain.users;
 
+import com.inventory.manager.exception.AuthenticationFailureExcetion;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -28,6 +29,8 @@ public class Users implements UserDetails {
     private Date created_at;
     private Date updated_at;
     private boolean is_active;
+
+    @Enumerated(EnumType.STRING)
     private Roles role;
     private boolean email_verified;
     private boolean two_factor_enabled;
@@ -40,8 +43,16 @@ public class Users implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(this.role == Roles.ADMIN) return List.of(new SimpleGrantedAuthority("admin"), new SimpleGrantedAuthority("user"));
-        else return List.of(new SimpleGrantedAuthority("user"));
+        try {
+            if (this.role == Roles.ADMIN) {
+                return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+            } else if (this.role == null) {
+                throw new AuthenticationFailureExcetion("Usuário sem permissão");
+            }
+            return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        } catch (AuthenticationFailureExcetion e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
