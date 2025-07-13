@@ -1,10 +1,10 @@
 package com.inventory.manager.domain.product;
 
-import com.inventory.manager.domain.category.Category;
+import com.inventory.manager.domain.category.CategoryDTO;
 
 public record ProductDTOResponse(
         Long id,
-        Category category,
+        CategoryDTO category,
         String sku,
         String name,
         String description,
@@ -14,7 +14,7 @@ public record ProductDTOResponse(
     public ProductDTOResponse(Product product) {
         this(
                 product.getId(),
-                product.getCategory(),
+                new CategoryDTO(product.getCategory()),
                 product.getSku(),
                 product.getName(),
                 product.getDescription(),

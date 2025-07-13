@@ -19,7 +19,7 @@ public class UserController {
     UsersServices usersServices;
 
     @GetMapping("/all")
-    public ResponseEntity findAll (){
+    public ResponseEntity<List<UserDTO>> findAll (){
         List<UserDTO> allUsers = usersServices.findAll();
         return ResponseEntity.ok(allUsers);
     }
