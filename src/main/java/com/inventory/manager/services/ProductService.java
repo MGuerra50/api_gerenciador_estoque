@@ -1,5 +1,6 @@
 package com.inventory.manager.services;
 
+import com.inventory.manager.domain.category.Category;
 import com.inventory.manager.domain.product.Product;
 import com.inventory.manager.domain.product.ProductDTORequest;
 import com.inventory.manager.domain.product.ProductDTOResponse;
@@ -17,6 +18,8 @@ public class ProductService {
 
     @Autowired
     ProductRepository productRepository;
+    @Autowired
+    CategoryService categoryService;
 
     public Product findById(Long id) {
         return productRepository.findById(id).orElseThrow(
@@ -31,12 +34,14 @@ public class ProductService {
 
     public ProductDTOResponse createProduct(ProductDTORequest productDTORequest) {
         Product product = new Product();
-        product.setCategory(productDTORequest.category());
+        Category category = categoryService.findById(productDTORequest.categoryId());
+        product.setCategory(category);
         product.setName(productDTORequest.name());
         product.setSku(productDTORequest.sku());
         product.setDescription(productDTORequest.description());
         product.setCost_price(productDTORequest.cost_price());
         product.setSelling_price(productDTORequest.selling_price());
+        product.setIs_active(true);
 
         Product savedProduct = productRepository.save(product);
 
@@ -46,13 +51,14 @@ public class ProductService {
     @Transactional
     public ProductDTOResponse updateProduct(Long id, ProductDTORequest dtoRequest) {
         Product product = findById(id);
-
-        product.setCategory(dtoRequest.category());
+        Category category = categoryService.findById(dtoRequest.categoryId());
+        product.setCategory(category);
         product.setName(dtoRequest.name());
         product.setSku(dtoRequest.sku());
         product.setDescription(dtoRequest.description());
         product.setCost_price(dtoRequest.cost_price());
         product.setSelling_price(dtoRequest.selling_price());
+        product.setIs_active(dtoRequest.isActive());
 
         Product savedProduct = productRepository.save(product);
 

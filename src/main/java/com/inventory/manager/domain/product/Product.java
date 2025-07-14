@@ -13,10 +13,10 @@ import org.hibernate.annotations.SQLRestriction;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
-@SQLDelete(sql = "UPDATE im_products" +
-        "SET is_active = false" +
-        "WHERE id = ?")
-@SQLRestriction("is_active = true")
+@SQLDelete(sql = " UPDATE im_products " +
+        " SET is_active = false " +
+        " WHERE id = ? ")
+@SQLRestriction(" is_active = true ")
 public class Product {
 
     @Id
