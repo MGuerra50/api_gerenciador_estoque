@@ -1,7 +1,6 @@
-package com.inventory.manager.controller;
+package com.inventory.manager.controller.Users;
 
 import com.inventory.manager.domain.users.UserDTO;
-import com.inventory.manager.domain.users.Users;
 import com.inventory.manager.services.UsersServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,5 +21,10 @@ public class UserController {
     public ResponseEntity<List<UserDTO>> findAll (){
         List<UserDTO> allUsers = usersServices.findAll();
         return ResponseEntity.ok(allUsers);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDTO> findById (Long id){
+        return ResponseEntity.ok(new UserDTO(usersServices.findById(id)));
     }
 }
