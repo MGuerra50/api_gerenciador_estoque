@@ -2,11 +2,10 @@ package com.inventory.manager.controller.Users;
 
 import com.inventory.manager.domain.users.UserDTO;
 import com.inventory.manager.services.UsersServices;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,5 +25,16 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> findById (Long id){
         return ResponseEntity.ok(new UserDTO(usersServices.findById(id)));
+    }
+
+    @PutMapping
+    public ResponseEntity<UserDTO> updateUser (@Valid @RequestBody UserDTO dto){
+        return  ResponseEntity.ok(usersServices.updateUser(dto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser (@Valid @PathVariable Long id){
+        usersServices.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }

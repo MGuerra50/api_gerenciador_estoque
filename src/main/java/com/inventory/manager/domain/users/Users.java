@@ -3,6 +3,8 @@ package com.inventory.manager.domain.users;
 import com.inventory.manager.exception.AuthenticationFailureExcetion;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,6 +20,10 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id")
+@SQLDelete(sql = " UPDATE im_user " +
+        " SET is_active = false " +
+        " WHERE id = ? ")
+@SQLRestriction(" is_active = true ")
 public class Users implements UserDetails {
 
     @Id
