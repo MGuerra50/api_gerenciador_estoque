@@ -29,4 +29,5 @@ public class Stock {
 
     @Column(nullable = false)
     private int amount;
+    private Boolean isActive;
 }
