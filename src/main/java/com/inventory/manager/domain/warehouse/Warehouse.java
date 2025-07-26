@@ -17,4 +17,5 @@ public class Warehouse {
     private Long id;
     private String name;
     private String endereco;
+    private Boolean isActive;
 }
