@@ -2,6 +2,8 @@ package com.inventory.manager.domain.supplier;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 @Entity(name = "Supplier")
 @Table(name = "im_suppliers")
@@ -10,6 +12,10 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
+@SQLDelete(sql = " UPDATE im_suppliers " +
+        "SET isactive = false " +
+        "WHERE id = ? ")
+@SQLRestriction(" isactive = true ")
 public class Supplier {
 
     @Id
@@ -19,4 +25,5 @@ public class Supplier {
     private String fantasyName;
     private String companyName;
     private String cnpj;
+    private Boolean isActive;
 }

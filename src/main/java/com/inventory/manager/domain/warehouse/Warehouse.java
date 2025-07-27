@@ -2,6 +2,8 @@ package com.inventory.manager.domain.warehouse;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 @Entity(name = "Warehouse")
 @Table(name = "im_warehouses")
@@ -10,6 +12,10 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
+@SQLDelete(sql = " UPDATE im_warehouse " +
+        " SET active = false" +
+        " WHERE id = ? ")
+@SQLRestriction(" active = true ")
 public class Warehouse {
 
     @Id
