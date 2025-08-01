@@ -6,12 +6,18 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 @Entity(name = "Stock")
 @Table(name = "im_stock")
 @Getter
 @Setter
 @NoArgsConstructor
+@SQLDelete(sql = " UPDATE im_stock" +
+        " SET isactive = false" +
+        " WHERE id = ? ")
+@SQLRestriction(" isactive = false ")
 public class Stock {
 
     @EmbeddedId
