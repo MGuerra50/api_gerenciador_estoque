@@ -21,4 +21,9 @@ public class StockId implements Serializable {
 
     @Column(name = "location_id")
     private Long locationId;
+
+    public StockId (Long productId, Long locationId){
+        this.productId = productId;
+        this.locationId = locationId;
+    }
 }

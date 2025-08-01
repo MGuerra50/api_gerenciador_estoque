@@ -5,6 +5,8 @@ import com.inventory.manager.domain.product.Product;
 import com.inventory.manager.domain.supplier.Supplier;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.util.Date;
 
@@ -15,6 +17,10 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
+@SQLDelete(sql = " UPDATE im_moviments " +
+        " SET isactive = false " +
+        "WHERE id = ? ")
+@SQLRestriction(" isactive = true ")
 public class Moviment {
 
     @Id
@@ -36,5 +42,6 @@ public class Moviment {
     private Type type;
     private int numberOfItemsInTransaction;
     private Date date_time;
+    private Boolean isActive;
 
 }
