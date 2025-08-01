@@ -13,9 +13,9 @@ import org.hibernate.annotations.SQLRestriction;
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 @SQLDelete(sql = " UPDATE im_warehouse " +
-        " SET active = false" +
+        " SET isactive = false" +
         " WHERE id = ? ")
-@SQLRestriction(" active = true ")
+@SQLRestriction(" isactive = true ")
 public class Warehouse {
 
     @Id
@@ -23,5 +23,6 @@ public class Warehouse {
     private Long id;
     private String name;
     private String endereco;
+    @Column(name = " isactive ")
     private Boolean isActive;
 }
