@@ -27,5 +27,6 @@ public class Location {
     @JoinColumn(name = "warehouses_id")
     private Warehouse warehouse;
     private String locationCode;
+    @Column(name = " isactive ")
     private Boolean isActive;
 }
