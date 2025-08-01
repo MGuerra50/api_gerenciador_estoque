@@ -9,7 +9,8 @@ public record ProductDTOResponse(
         String name,
         String description,
         Float cost_price,
-        Float selling_price
+        Float selling_price,
+        Boolean isActive
 ) {
     public ProductDTOResponse(Product product) {
         this(
@@ -19,7 +20,8 @@ public record ProductDTOResponse(
                 product.getName(),
                 product.getDescription(),
                 product.getCost_price(),
-                product.getSelling_price()
+                product.getSelling_price(),
+                product.getIs_active()
         );
     }
 }
