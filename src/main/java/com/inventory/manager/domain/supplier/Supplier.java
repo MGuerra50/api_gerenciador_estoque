@@ -25,5 +25,6 @@ public class Supplier {
     private String fantasyName;
     private String companyName;
     private String cnpj;
+    @Column(name = "isactive")
     private Boolean isActive;
 }
