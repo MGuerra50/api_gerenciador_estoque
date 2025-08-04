@@ -16,8 +16,9 @@ import org.hibernate.annotations.SQLRestriction;
 @NoArgsConstructor
 @SQLDelete(sql = " UPDATE im_stock" +
         " SET isactive = false" +
-        " WHERE id = ? ")
-@SQLRestriction(" isactive = false ")
+        " WHERE products_id = ? " +
+        " AND locations_id = ? ")
+@SQLRestriction(" isactive = true ")
 public class Stock {
 
     @EmbeddedId
@@ -25,15 +26,16 @@ public class Stock {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("productId")
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "products_id")
     private Product product;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("locationId")
-    @JoinColumn(name = "location_id")
+    @JoinColumn(name = "locations_id")
     private Location location;
 
     @Column(nullable = false)
     private int amount;
+    @Column(name = "isactive")
     private Boolean isActive;
 }

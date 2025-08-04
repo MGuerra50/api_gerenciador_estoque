@@ -38,8 +38,8 @@ public class StockService {
     }
 
     public StockDTO createStock (StockRequestDTO stockRequestDTO){
-        Product product = productService.findById(stockRequestDTO.idProduct());
-        Location location = locationService.findById(stockRequestDTO.idLocation());
+        Product product = productService.findById(stockRequestDTO.productId());
+        Location location = locationService.findById(stockRequestDTO.locationId());
         StockId stockId = new StockId(product.getId(), location.getId());
         
         Stock stock = new Stock();
@@ -65,7 +65,7 @@ public class StockService {
 
     public void deleteById (Long productId, Long locationId){
         StockId stockId = new StockId (productId, locationId);
-        if(stockRepository.existsById(stockId)){
+        if(!stockRepository.existsById(stockId)){
             throw new ResourceNotFoundException(
                     "Stock do produto id \"" + productId
                             + "\" e localização id \"" + locationId
