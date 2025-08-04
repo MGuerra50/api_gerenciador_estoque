@@ -12,7 +12,7 @@ import org.hibernate.annotations.SQLRestriction;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
-@SQLDelete(sql = " UPDATE im_warehouse " +
+@SQLDelete(sql = " UPDATE im_warehouses " +
         " SET isactive = false" +
         " WHERE id = ? ")
 @SQLRestriction(" isactive = true ")

@@ -30,8 +30,8 @@ public class WarehouseService {
 
     public WarehouseDTO createWarehouse (WarehouseRequestDTO warehouseRequestDTO){
         Warehouse warehouse = new Warehouse();
-        warehouse.setName(warehouse.getName());
-        warehouse.setEndereco(warehouse.getEndereco());
+        warehouse.setName(warehouseRequestDTO.name());
+        warehouse.setEndereco(warehouseRequestDTO.endereco());
         warehouse.setIsActive(true);
 
         Warehouse savedWarehouse = warehouseRepository.save(warehouse);

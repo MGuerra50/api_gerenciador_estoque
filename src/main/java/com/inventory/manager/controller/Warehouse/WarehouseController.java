@@ -29,7 +29,7 @@ public class WarehouseController {
         return ResponseEntity.ok(warehouseService.findAll());
     }
 
-    @PostMapping("/create")
+    @PostMapping()
     public ResponseEntity<WarehouseDTO> createWarehouse (@Valid @RequestBody WarehouseRequestDTO warehouseRequestDTO){
         WarehouseDTO warehouseDTO = warehouseService.createWarehouse(warehouseRequestDTO);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
