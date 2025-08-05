@@ -31,7 +31,7 @@ public class StockController {
         return ResponseEntity.ok(stockService.findAll());
     }
 
-    @PostMapping("/createStock")
+    @PostMapping()
     public ResponseEntity<StockDTO> createStock (@Valid @RequestBody StockRequestDTO stockRequestDTO){
         StockDTO stockDTO = stockService.createStock(stockRequestDTO);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
@@ -47,7 +47,7 @@ public class StockController {
     }
 
     @DeleteMapping("/product/{productId}/location/{locationId}")
-    public ResponseEntity<Void> deleteById (@PathVariable Long productId, @RequestBody Long locationId){
+    public ResponseEntity<Void> deleteById (@PathVariable Long productId, @PathVariable Long locationId){
         stockService.deleteById(productId, locationId);
         return ResponseEntity.noContent().build();
     }

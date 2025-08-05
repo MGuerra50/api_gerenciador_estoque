@@ -2,7 +2,6 @@ package com.inventory.manager.domain.users;
 
 import com.inventory.manager.exception.AuthenticationFailureExcetion;
 import jakarta.persistence.*;
-import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,11 +14,6 @@ import java.util.List;
 
 @Table(name = "im_user")
 @Entity(name = "Users")
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
-@EqualsAndHashCode(of = "id")
 @SQLDelete(sql = " UPDATE im_user " +
         " SET is_active = false " +
         " WHERE id = ? ")
@@ -45,6 +39,22 @@ public class Users implements UserDetails {
         this.email = email;
         this.password = encryptedPassword;
         this.role = roles;
+    }
+
+    public Users(Long id, String name, String email, String password, Date created_at, Date updated_at, boolean is_active, Roles role, boolean email_verified, boolean two_factor_enabled) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
+        this.is_active = is_active;
+        this.role = role;
+        this.email_verified = email_verified;
+        this.two_factor_enabled = two_factor_enabled;
+    }
+
+    public Users() {
     }
 
     @Override
@@ -89,5 +99,104 @@ public class Users implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public Date getCreated_at() {
+        return this.created_at;
+    }
+
+    public Date getUpdated_at() {
+        return this.updated_at;
+    }
+
+    public boolean is_active() {
+        return this.is_active;
+    }
+
+    public Roles getRole() {
+        return this.role;
+    }
+
+    public boolean isEmail_verified() {
+        return this.email_verified;
+    }
+
+    public boolean isTwo_factor_enabled() {
+        return this.two_factor_enabled;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setCreated_at(Date created_at) {
+        this.created_at = created_at;
+    }
+
+    public void setUpdated_at(Date updated_at) {
+        this.updated_at = updated_at;
+    }
+
+    public void set_active(boolean is_active) {
+        this.is_active = is_active;
+    }
+
+    public void setRole(Roles role) {
+        this.role = role;
+    }
+
+    public void setEmail_verified(boolean email_verified) {
+        this.email_verified = email_verified;
+    }
+
+    public void setTwo_factor_enabled(boolean two_factor_enabled) {
+        this.two_factor_enabled = two_factor_enabled;
+    }
+
+    public boolean equals(final Object o) {
+        if (o == this) return true;
+        if (!(o instanceof Users)) return false;
+        final Users other = (Users) o;
+        if (!other.canEqual((Object) this)) return false;
+        final Object this$id = this.getId();
+        final Object other$id = other.getId();
+        if (this$id == null ? other$id != null : !this$id.equals(other$id)) return false;
+        return true;
+    }
+
+    protected boolean canEqual(final Object other) {
+        return other instanceof Users;
+    }
+
+    public int hashCode() {
+        final int PRIME = 59;
+        int result = 1;
+        final Object $id = this.getId();
+        result = result * PRIME + ($id == null ? 43 : $id.hashCode());
+        return result;
     }
 }

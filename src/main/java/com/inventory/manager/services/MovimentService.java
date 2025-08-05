@@ -4,6 +4,7 @@ import com.inventory.manager.domain.location.Location;
 import com.inventory.manager.domain.moviment.*;
 import com.inventory.manager.domain.product.Product;
 import com.inventory.manager.domain.supplier.Supplier;
+import com.inventory.manager.domain.users.Users;
 import com.inventory.manager.exception.ResourceNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ public class MovimentService {
     LocationService locationService;
     @Autowired
     SupplierService supplierService;
+    @Autowired
+    UsersServices usersServices;
 
     public Moviment findById (Long id){
         return movimentRepository.findById(id).orElseThrow(()->new ResourceNotFoundException(
@@ -36,11 +39,13 @@ public class MovimentService {
     }
 
     public MovimentDTO createMoviment (MovimentRequestDTO movimentRequestDTO){
+        Users users = usersServices.findById(movimentRequestDTO.userId());
         Product product = productService.findById(movimentRequestDTO.productId());
         Location location = locationService.findById(movimentRequestDTO.locationId());
         Supplier supplier = supplierService.findById(movimentRequestDTO.supplierId());
 
         Moviment moviment = new Moviment();
+        moviment.setUsers(users);
         moviment.setProduct(product);
         moviment.setLocation(location);
         moviment.setSupplier(supplier);
@@ -58,7 +63,6 @@ public class MovimentService {
         Moviment moviment = findById(id);
         moviment.setType(dto.type());
         moviment.setNumberOfItemsInTransaction(dto.numberOfItemsTransaction());
-        moviment.setIsActive(dto.isActive());
 
         Moviment savedMoviment = movimentRepository.save(moviment);
         return new MovimentDTO(savedMoviment);

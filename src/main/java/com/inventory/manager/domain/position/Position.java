@@ -22,5 +22,6 @@ public class Position {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @Column(name = "isactive")
     private Boolean isActive;
 }

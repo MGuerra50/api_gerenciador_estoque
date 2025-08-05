@@ -4,6 +4,7 @@ import java.util.Date;
 
 public record MovimentDTO(
         Long id,
+        Long userId,
         Long productId,
         Long locationId,
         Long supplierId,
@@ -15,6 +16,7 @@ public record MovimentDTO(
     public MovimentDTO (Moviment moviment){
         this(
                 moviment.getId(),
+                moviment.getUsers().getId(),
                 moviment.getProduct().getId(),
                 moviment.getLocation().getId(),
                 moviment.getSupplier().getId(),

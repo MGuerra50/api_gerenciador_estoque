@@ -29,7 +29,7 @@ public class SupplierController {
         return ResponseEntity.ok(supplierService.findAll());
     }
 
-    @PostMapping("/{id}")
+    @PostMapping()
     public ResponseEntity<SupplierDTO> createSupplier (@Valid @RequestBody SupplierRequestDTO requestDTO){
         SupplierDTO supplierDTO = supplierService.createSupplier(requestDTO);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
