@@ -1,5 +1,6 @@
 package com.inventory.manager.services;
 
+import com.inventory.manager.domain.address.Address;
 import com.inventory.manager.domain.warehouse.Warehouse;
 import com.inventory.manager.domain.warehouse.WarehouseDTO;
 import com.inventory.manager.domain.warehouse.WarehouseRepository;
@@ -18,6 +19,9 @@ public class WarehouseService {
     @Autowired
     WarehouseRepository warehouseRepository;
 
+    @Autowired
+    AddressService addressService;
+
     public Warehouse findById (Long id){
         return warehouseRepository.findById(id).orElseThrow(
                 ()->new ResourceNotFoundException("Não foi encontrado um armazém com o id \"" + id + "\".")
@@ -29,9 +33,10 @@ public class WarehouseService {
     }
 
     public WarehouseDTO createWarehouse (WarehouseRequestDTO warehouseRequestDTO){
+        Address address = addressService.findById(warehouseRequestDTO.address());
         Warehouse warehouse = new Warehouse();
         warehouse.setName(warehouseRequestDTO.name());
-        warehouse.setEndereco(warehouseRequestDTO.endereco());
+        warehouse.setAddress(address);
         warehouse.setIsActive(true);
 
         Warehouse savedWarehouse = warehouseRepository.save(warehouse);
@@ -40,9 +45,10 @@ public class WarehouseService {
 
     @Transactional
     public WarehouseDTO updateWarehouse (Long id, WarehouseDTO warehouseDTO){
+        Address address = addressService.findById(warehouseDTO.address());
         Warehouse warehouse = findById(id);
         warehouse.setName(warehouseDTO.name());
-        warehouse.setEndereco(warehouseDTO.endereco());
+        warehouse.setAddress(address);
         warehouse.setIsActive(warehouseDTO.isActive());
 
         Warehouse savedWarehouse = warehouseRepository.save(warehouse);

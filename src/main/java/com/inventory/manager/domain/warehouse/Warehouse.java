@@ -1,5 +1,6 @@
 package com.inventory.manager.domain.warehouse;
 
+import com.inventory.manager.domain.address.Address;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
@@ -22,7 +23,11 @@ public class Warehouse {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String endereco;
+
     @Column(name = " isactive ")
     private Boolean isActive;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "addresses_id")
+    private Address address;
 }
