@@ -27,4 +27,5 @@ public class Supplier {
     private String cnpj;
     @Column(name = "isactive")
     private Boolean isActive;
+    private String email;
 }

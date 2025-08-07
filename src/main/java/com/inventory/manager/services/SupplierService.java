@@ -34,6 +34,8 @@ public class SupplierService {
         supplier.setCompanyName(supplierRequestDTO.companyName());
         supplier.setCnpj(supplierRequestDTO.cnpj());
         supplier.setIsActive(true);
+        supplier.setEmail(supplierRequestDTO.email());
+
         Supplier savedSupplier = supplierRespository.save(supplier);
         return new SupplierDTO(savedSupplier);
     }
@@ -47,6 +49,7 @@ public class SupplierService {
         supplier.setCompanyName(supplierDTO.companyName());
         supplier.setCnpj(supplierDTO.cnpj());
         supplier.setIsActive(supplierDTO.isActive());
+        supplier.setEmail(supplierDTO.email());
 
         Supplier savedSupplier = supplierRespository.save(supplier);
         return new SupplierDTO(savedSupplier);
