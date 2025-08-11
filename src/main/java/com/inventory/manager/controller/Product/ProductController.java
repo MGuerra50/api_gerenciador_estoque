@@ -1,6 +1,7 @@
 package com.inventory.manager.controller.Product;
 
 import com.inventory.manager.domain.product.ProductDTORequest;
+import com.inventory.manager.domain.product.ProductDTORequestUpdate;
 import com.inventory.manager.domain.product.ProductDTOResponse;
 import com.inventory.manager.services.ProductService;
 import jakarta.validation.Valid;
@@ -40,7 +41,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductDTOResponse> updateProduct (@PathVariable Long id, @Valid @RequestBody ProductDTORequest productDTORequest){
+    public ResponseEntity<ProductDTOResponse> updateProduct (@PathVariable Long id, @Valid @RequestBody ProductDTORequestUpdate productDTORequest){
         return ResponseEntity.ok(productService.updateProduct(id, productDTORequest));
     }
 

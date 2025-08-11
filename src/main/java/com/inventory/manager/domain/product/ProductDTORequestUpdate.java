@@ -4,18 +4,17 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
-public record ProductDTORequest(
+public record ProductDTORequestUpdate(
         @NotNull @Positive Long categoryId,
         @NotBlank String sku,
         @NotBlank String name,
         String description,
         @NotNull @Positive Float cost_price,
         @NotNull @Positive Float selling_price,
-        @NotNull Boolean isActive,
         String brand,
         String model,
         String version,
-        @NotNull Long idSupplier,
+        Long idSupplier,
         Long idSecondSupplier,
         String color,
         String dimensions,
@@ -24,12 +23,11 @@ public record ProductDTORequest(
         String productDetails,
         String unitOfMeasurement,
         String unitOfMeasurementDescription,
-        Long unitPriceOfLasPurchase,
         Long averageUnitPrice,
-        @NotNull @Positive Long createdBy
+        Long updatedBy
         ) {
 
-    public ProductDTORequest(Product product) {
+    public ProductDTORequestUpdate(Product product) {
         this(
                 product.getCategory().getId(),
                 product.getSku(),
@@ -37,7 +35,6 @@ public record ProductDTORequest(
                 product.getDescription(),
                 product.getCost_price(),
                 product.getSelling_price(),
-                product.getIs_active(),
                 product.getBrand(),
                 product.getModel(),
                 product.getVersion(),
@@ -50,10 +47,8 @@ public record ProductDTORequest(
                 product.getProductDetails(),
                 product.getUnitOfMeasurement(),
                 product.getUnitOfMeasurementDescription(),
-                product.getUnitPriceOfLastPurchase(),
                 product.getAverageUnitPrice(),
-                product.getCreatedByUser().getId()
-
+                product.getUpdatedByUser().getId()
         );
     }
 }
