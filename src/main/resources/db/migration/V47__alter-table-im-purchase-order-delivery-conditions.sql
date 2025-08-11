@@ -1,0 +1,3 @@
+alter table im_purchase_order
+add constraint fk_purchase_order_delivery_conditions
+foreign key (id_delivery_conditions) references im_delivery_conditions(id);

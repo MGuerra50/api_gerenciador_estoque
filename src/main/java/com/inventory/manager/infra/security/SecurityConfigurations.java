@@ -29,10 +29,16 @@ public class SecurityConfigurations {
                 .authorizeHttpRequests(
                         authHttpReq -> {
                             authHttpReq.requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                            .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+                                    .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+                                    .requestMatchers(
+                                            "/v3/api-docs",
+                                            "/v3/api-docs/**",
+                                            "/swagger-ui.html",
+                                            "/swagger-ui/**"
+                                    ).permitAll()
                                     .requestMatchers(HttpMethod.GET, "/products/all").authenticated()
                                     .requestMatchers("/products/**").authenticated()
-                            .anyRequest().authenticated();
+                                    .anyRequest().authenticated();
                         }
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
@@ -40,12 +46,12 @@ public class SecurityConfigurations {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager (AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return  authenticationConfiguration.getAuthenticationManager();
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder (){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }
