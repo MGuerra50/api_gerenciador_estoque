@@ -1,0 +1,3 @@
+alter table im_purchase_order_item
+add constraint fk_purchase_order_item_purchase_order
+foreign key (id_purchase_order) references im_purchase_order(id);

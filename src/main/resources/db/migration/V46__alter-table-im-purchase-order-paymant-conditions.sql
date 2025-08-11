@@ -1,0 +1,3 @@
+alter table im_purchase_order
+add constraint fk_purchase_order_paymant_conditions
+foreign key (id_paymant_conditions) references im_paymant_conditions(id);
