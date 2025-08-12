@@ -4,6 +4,7 @@ import com.inventory.manager.domain.product.ProductDTORequest;
 import com.inventory.manager.domain.product.ProductDTORequestUpdate;
 import com.inventory.manager.domain.product.ProductDTOResponse;
 import com.inventory.manager.services.ProductService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/products")
+@SecurityRequirement(name = "bearer-key")
 public class ProductController {
 
     @Autowired

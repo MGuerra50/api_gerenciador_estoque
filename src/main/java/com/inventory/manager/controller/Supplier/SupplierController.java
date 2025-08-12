@@ -3,6 +3,7 @@ package com.inventory.manager.controller.Supplier;
 import com.inventory.manager.domain.supplier.SupplierDTO;
 import com.inventory.manager.domain.supplier.SupplierRequestDTO;
 import com.inventory.manager.services.SupplierService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/supplier")
+@SecurityRequirement(name = "bearer-key")
 public class SupplierController {
 
     @Autowired

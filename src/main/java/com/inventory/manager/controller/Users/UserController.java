@@ -2,6 +2,7 @@ package com.inventory.manager.controller.Users;
 
 import com.inventory.manager.domain.users.UserDTO;
 import com.inventory.manager.services.UsersServices;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @RequestMapping("/user")
 @RestController
+@SecurityRequirement(name = "bearer-key")
 public class UserController {
 
     @Autowired
