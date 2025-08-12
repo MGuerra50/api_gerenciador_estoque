@@ -1,15 +1,15 @@
 package com.inventory.manager.services;
 
 import com.inventory.manager.domain.category.Category;
-import com.inventory.manager.domain.product.Product;
-import com.inventory.manager.domain.product.ProductDTORequest;
-import com.inventory.manager.domain.product.ProductDTOResponse;
-import com.inventory.manager.domain.product.ProductRepository;
+import com.inventory.manager.domain.product.*;
+import com.inventory.manager.domain.supplier.Supplier;
+import com.inventory.manager.domain.users.Users;
 import com.inventory.manager.exception.ResourceNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,6 +20,10 @@ public class ProductService {
     ProductRepository productRepository;
     @Autowired
     CategoryService categoryService;
+    @Autowired
+    SupplierService supplierService;
+    @Autowired
+    UsersServices usersServices;
 
     public Product findById(Long id) {
         return productRepository.findById(id).orElseThrow(
@@ -32,16 +36,38 @@ public class ProductService {
         return list.stream().map(ProductDTOResponse::new).collect(Collectors.toList());
     }
 
-    public ProductDTOResponse createProduct(ProductDTORequest productDTORequest) {
+    public ProductDTOResponse createProduct(ProductDTORequest dto) {
+        Users user = usersServices.findById(dto.createdBy());
+        Supplier firstSupplier = supplierService.findById(dto.idSupplier());
+        Supplier secondSupplier = null;
+        if(dto.idSecondSupplier() != null){
+            secondSupplier = supplierService.findById(dto.idSecondSupplier());
+        }
+
         Product product = new Product();
-        Category category = categoryService.findById(productDTORequest.categoryId());
+        Category category = categoryService.findById(dto.categoryId());
         product.setCategory(category);
-        product.setName(productDTORequest.name());
-        product.setSku(productDTORequest.sku());
-        product.setDescription(productDTORequest.description());
-        product.setCost_price(productDTORequest.cost_price());
-        product.setSelling_price(productDTORequest.selling_price());
+        product.setName(dto.name());
+        product.setSku(dto.sku());
+        product.setDescription(dto.description());
+        product.setCost_price(dto.cost_price());
+        product.setSelling_price(dto.selling_price());
         product.setIs_active(true);
+        product.setBrand(dto.brand());
+        product.setModel(dto.model());
+        product.setVersion(dto.version());
+        product.setSupplier(firstSupplier);
+        product.setSecondSupplier(secondSupplier);
+        product.setColor(dto.color());
+        product.setDimensions(dto.dimensions());
+        product.setGrossWeight(dto.grossWeight());
+        product.setNetWeight(dto.netWeight());
+        product.setProductDetails(dto.productDetails());
+        product.setUnitOfMeasurement(dto.unitOfMeasurement());
+        product.setUnitOfMeasurementDescription(dto.unitOfMeasurementDescription());
+        product.setAverageUnitPrice(dto.averageUnitPrice());
+        product.setCreatedByUser(user);
+        product.setCreatedAt(LocalDateTime.now());
 
         Product savedProduct = productRepository.save(product);
 
@@ -49,16 +75,36 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductDTOResponse updateProduct(Long id, ProductDTORequest dtoRequest) {
+    public ProductDTOResponse updateProduct(Long id, ProductDTORequestUpdate dto) {
+        Supplier firstSupplier = supplierService.findById(dto.idSupplier());
+        Supplier secondSupplier = null;
+        if(dto.idSecondSupplier() != null){
+            secondSupplier = supplierService.findById(dto.idSecondSupplier());
+        }
+        Users user = usersServices.findById(dto.updatedBy());
         Product product = findById(id);
-        Category category = categoryService.findById(dtoRequest.categoryId());
+        Category category = categoryService.findById(dto.categoryId());
         product.setCategory(category);
-        product.setName(dtoRequest.name());
-        product.setSku(dtoRequest.sku());
-        product.setDescription(dtoRequest.description());
-        product.setCost_price(dtoRequest.cost_price());
-        product.setSelling_price(dtoRequest.selling_price());
-        product.setIs_active(dtoRequest.isActive());
+        product.setName(dto.name());
+        product.setSku(dto.sku());
+        product.setDescription(dto.description());
+        product.setCost_price(dto.cost_price());
+        product.setSelling_price(dto.selling_price());
+        product.setBrand(dto.brand());
+        product.setModel(dto.model());
+        product.setVersion(dto.version());
+        product.setSupplier(firstSupplier);
+        product.setSecondSupplier(secondSupplier);
+        product.setColor(dto.color());
+        product.setDimensions(dto.dimensions());
+        product.setGrossWeight(dto.grossWeight());
+        product.setNetWeight(dto.netWeight());
+        product.setProductDetails(dto.productDetails());
+        product.setUnitOfMeasurement(dto.unitOfMeasurement());
+        product.setUnitOfMeasurementDescription(dto.unitOfMeasurementDescription());
+        product.setAverageUnitPrice(dto.averageUnitPrice());
+        product.setUpdatedByUser(user);
+        product.setUpdatedAt(LocalDateTime.now());
 
         Product savedProduct = productRepository.save(product);
 

@@ -4,6 +4,7 @@ import com.inventory.manager.domain.moviment.MovimentDTO;
 import com.inventory.manager.domain.moviment.MovimentRequestDTO;
 import com.inventory.manager.domain.moviment.MovimentUpdateDTO;
 import com.inventory.manager.services.MovimentService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/moviment")
+@SecurityRequirement(name = "bearer-key")
 public class MovimentController {
 
     @Autowired

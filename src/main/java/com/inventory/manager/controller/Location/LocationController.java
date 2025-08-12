@@ -3,6 +3,7 @@ package com.inventory.manager.controller.Location;
 import com.inventory.manager.domain.location.LocationDTO;
 import com.inventory.manager.domain.location.LocationRequestDTO;
 import com.inventory.manager.services.LocationService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/location")
+@SecurityRequirement(name = "bearer-key")
 public class LocationController {
 
     @Autowired

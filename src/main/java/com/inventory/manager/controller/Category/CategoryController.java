@@ -3,6 +3,7 @@ package com.inventory.manager.controller.Category;
 import com.inventory.manager.domain.category.CategoryDTO;
 import com.inventory.manager.domain.category.CategoryRequestDTO;
 import com.inventory.manager.services.CategoryService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/category")
+@SecurityRequirement(name = "bearer-key")
 public class CategoryController {
 
     @Autowired

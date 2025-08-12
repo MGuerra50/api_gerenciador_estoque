@@ -4,6 +4,7 @@ import com.inventory.manager.domain.stock.Stock;
 import com.inventory.manager.domain.stock.StockDTO;
 import com.inventory.manager.domain.stock.StockRequestDTO;
 import com.inventory.manager.services.StockService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/stock")
+@SecurityRequirement(name = "bearer-key")
 public class StockController {
 
     @Autowired

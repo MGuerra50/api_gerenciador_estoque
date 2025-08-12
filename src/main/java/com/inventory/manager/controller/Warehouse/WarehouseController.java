@@ -3,6 +3,7 @@ package com.inventory.manager.controller.Warehouse;
 import com.inventory.manager.domain.warehouse.WarehouseDTO;
 import com.inventory.manager.domain.warehouse.WarehouseRequestDTO;
 import com.inventory.manager.services.WarehouseService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/warehouse")
+@SecurityRequirement(name = "bearer-key")
 public class WarehouseController {
 
     @Autowired
