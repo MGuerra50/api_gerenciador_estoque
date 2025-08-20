@@ -1,6 +1,5 @@
 package com.inventory.manager.controller.Stock;
 
-import com.inventory.manager.domain.stock.Stock;
 import com.inventory.manager.domain.stock.StockDTO;
 import com.inventory.manager.domain.stock.StockRequestDTO;
 import com.inventory.manager.services.StockService;
