@@ -44,7 +44,7 @@ public class PositionService {
         position.setIsActive(positionDTO.isActive());
 
         Position savedPosition = positionRepository.save(position);
-        return new PositionDTO(position);
+        return new PositionDTO(savedPosition);
     }
 
     public void deleteById (Long id){

@@ -2,6 +2,7 @@ package com.inventory.manager.services;
 
 import com.inventory.manager.domain.address.Address;
 import com.inventory.manager.domain.company.Company;
+import com.inventory.manager.domain.company.CompanyDTO;
 import com.inventory.manager.domain.company.CompanyRequestCreateDTO;
 import com.inventory.manager.domain.company.CompanyRepository;
 import com.inventory.manager.domain.company.CompanyRequestUpdateDTO;
@@ -23,9 +24,9 @@ public class CompanyService {
     @Autowired
     UsersServices usersServices;
 
-    public List<CompanyRequestCreateDTO> findAll() {
+    public List<CompanyDTO> findAll() {
         List<Company> companyList = companyRepository.findAll();
-        return companyList.stream().map(CompanyRequestCreateDTO::new).collect(Collectors.toList());
+        return companyList.stream().map(CompanyDTO::new).collect(Collectors.toList());
     }
 
     public Company findById(Long id) {
@@ -35,7 +36,7 @@ public class CompanyService {
     }
 
     @Transactional
-    public CompanyRequestCreateDTO createCompany (CompanyRequestCreateDTO dto){
+    public CompanyDTO createCompany (CompanyRequestCreateDTO dto){
         Address address = addressService.findById(dto.address());
         Users users = usersServices.findById(dto.createdByUser());
         Company company = new Company();
@@ -50,11 +51,11 @@ public class CompanyService {
         company.setCreatedByUser(users);
 
         Company savedCompany = companyRepository.save(company);
-        return new CompanyRequestCreateDTO(savedCompany);
+        return new CompanyDTO(savedCompany);
     }
 
     @Transactional
-    public CompanyRequestUpdateDTO updateCompany (Long id, CompanyRequestUpdateDTO dto){
+    public CompanyDTO updateCompany (Long id, CompanyRequestUpdateDTO dto){
         Company company = findById(id);
         Address address = addressService.findById(dto.address());
         Users users = usersServices.findById(dto.updatedByUser());
@@ -70,7 +71,7 @@ public class CompanyService {
         company.setUpdatedByUser(users);
         Company savedCompany = companyRepository.save(company);
 
-        return new CompanyRequestUpdateDTO(savedCompany);
+        return new CompanyDTO(savedCompany);
     }
 
     public void deleteById(Long id) {
